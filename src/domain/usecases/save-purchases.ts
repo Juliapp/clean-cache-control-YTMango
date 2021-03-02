@@ -4,7 +4,7 @@ export interface SavePurchase {
   
 }
 
-namespace SavePurchase {
+export namespace SavePurchase {
   export type Params = {
     id: string,
     date: Date,
