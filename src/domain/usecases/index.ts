@@ -1,0 +1,1 @@
+export * from '../../data/usecases/save-purchases/local-save-purchases'

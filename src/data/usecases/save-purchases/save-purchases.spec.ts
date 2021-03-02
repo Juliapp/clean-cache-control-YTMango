@@ -1,15 +1,6 @@
-// import SavePurchase from 'domain/usecases/save-purchases.ts'
-class LocalSavePurchases {
-  constructor(private readonly cacheStore: CacheStore) {}
-  async save(): Promise<void> {
-    this.cacheStore.delete('purchases')
-  }
-}
-
-interface CacheStore {
-  delete(key): void
-}
-
+import { CacheStore } from '@/data/protocols/cache'
+import { LocalSavePurchases } from '@/data/usecases'
+ 
 class CacheStoreSpy implements CacheStore {
   deleteCallsCount = 0
   key: string 
