@@ -22,13 +22,22 @@ describe('LocalSavePurchase', () => {
     expect(cacheStore.actions).toEqual([])
   })
 
-  test('Should call correct key on loada', async () => {
+  test('Should call correct key on load', async () => {
     const { sut, cacheStore } = makeSut()
     await sut.loadAll()
     expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
     expect(cacheStore.fetchKey).toBe('purchases')
   })
 
-  
+  test('Should return empty list if load fails', async () => {
+    const { sut, cacheStore } = makeSut()
+    cacheStore.simulateFetchError()
+    const purchases = await sut.loadAll()
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
+
+    expect(cacheStore.deletekey).toEqual('purchases')
+    expect(purchases).toEqual([])
+  })
+
 
 })
