@@ -22,22 +22,27 @@ describe('LocalSavePurchase', () => {
     expect(cacheStore.actions).toEqual([])
   })
 
-  test('Should call correct key on load', async () => {
-    const { sut, cacheStore } = makeSut()
-    await sut.loadAll()
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
-    expect(cacheStore.fetchKey).toBe('purchases')
-  })
-
   test('Should return empty list if load fails', async () => {
     const { sut, cacheStore } = makeSut()
     cacheStore.simulateFetchError()
     const purchases = await sut.loadAll()
     expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
-
     expect(cacheStore.deletekey).toEqual('purchases')
     expect(purchases).toEqual([])
   })
 
+  test('Should return a list of purchases if cache is less than 3 days old ', async () => {
+    const timestamp = new Date()
+    const { sut, cacheStore } = makeSut()
+    cacheStore.fetchResult = {
+      timestamp,
+      value: mockPurchases()
+    }
+    const purchases = await sut.loadAll()
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
+    expect(cacheStore.fetchKey).toBe('purchases')
+    expect(purchases).toEqual(cacheStore.fetchResult.value)
+  })
+  
 
 })
