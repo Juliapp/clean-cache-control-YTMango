@@ -57,9 +57,8 @@ describe('LocalSavePurchase', () => {
       value: mockPurchases()
     }
     const purchases = await sut.loadAll()
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
     expect(cacheStore.fetchKey).toBe('purchases')
-    expect(cacheStore.deletekey).toBe('purchases')
     expect(purchases).toEqual([])
   })
   
@@ -73,9 +72,8 @@ describe('LocalSavePurchase', () => {
       value: mockPurchases()
     }
     const purchases = await sut.loadAll()
-    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch, CacheStoreSpy.Action.delete])
+    expect(cacheStore.actions).toEqual([CacheStoreSpy.Action.fetch])
     expect(cacheStore.fetchKey).toBe('purchases')
-    expect(cacheStore.deletekey).toBe('purchases')
     expect(purchases).toEqual([])
   })
   
